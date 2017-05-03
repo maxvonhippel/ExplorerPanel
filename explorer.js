@@ -3,6 +3,21 @@ var canvas = document.createElement("canvas");
 canvas.setAttribute("id", "cid");
 var context = canvas.getContext('2d');
 
+// function to change list of divs into array
+function toArray(a) {
+	var result = [];
+	var i = a.length;
+	while (i--) {
+		result[i] = a[i];
+	}
+	return result;
+}
+
+// find all layers in our diagram
+var container = document.getElementById("container");
+var images = toArray(container.getElementsByClassName("layer"));
+console.log(images);
+
 // handle the clicks
 // code from http://stackoverflow.com/a/38488246/1586231
 $('#layer_1').on("mousedown", function(event) {
