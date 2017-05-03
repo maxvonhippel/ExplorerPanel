@@ -16,40 +16,63 @@ function toArray(a) {
 // find all layers in our diagram
 var container = document.getElementById("container");
 var images = toArray(container.getElementsByClassName("layer"));
-console.log(images);
+// images[0] is bottom of stack of images, last image is frontmost layer
 
-// handle the clicks
-// code from http://stackoverflow.com/a/38488246/1586231
-$('#layer_1').on("mousedown", function(event) {
+function assign_callback_for_event(element, event_name) {
 
-	// Get click coordinates
-	var x = event.pageX - this.offsetLeft,
-		y = event.pageY - this.offsetTop,
-		w = context.canvas.width = this.width,
-		h = context.canvas.height = this.height,
-		alpha;
+	// code from http://stackoverflow.com/a/38488246/1586231
+	var layer_name = '#'.concat(element.id);
+	$(layer_name).on(event_name, function(event) {
 
-	// Draw image to canvas
-	// and read Alpha channel value
+			// Get click coordinates
+			var x = event.pageX - this.offsetLeft,
+				y = event.pageY - this.offsetTop,
+				w = context.canvas.width = this.width,
+				h = context.canvas.height = this.height,
+				alpha;
 
-	context.drawImage(this, 0, 0, w, h);
-	alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
+			// Draw image to canvas
+			// and read Alpha channel value
 
-	console.log(alpha);
+			context.drawImage(this, 0, 0, w, h);
+			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
 
-	// If pixel is transparent,
-	// retrieve the element underneath and trigger it's click event
-	if( alpha === 0 ) {
+			console.log(alpha);
 
-		$(this).hide();
-		$(document.elementFromPoint(event.clientX, event.clientY)).trigger("mousedown");
-		$(this).show();
+			// If pixel is transparent,
+			// retrieve the element underneath and trigger it's click event
+			if( alpha === 0 ) {
 
-	} else {
-		console.log("LOGO clicked!");
+				$(this).hide();
+				$(document.elementFromPoint(event.clientX, event.clientY)).trigger('explore');
+				$(this).show();
+
+			} else {
+				console.log("CLICKED: " + element.id);
+			}
+
+		});
+
+}
+
+function assign_callback(element, index, array) {
+
+	try {
+
+		// try to assign callback
+		assign_callback_for_event(element, 'explore');
+
+
+	} catch (err) {
+
+		console.log("error while trying to assign callback: " + err);
+
 	}
-});
+}
 
-$('#layer_2').on("mousedown", function(event) {
-	console.log("LAYER 2 CLICKED!");
-});
+// now foreach layer below the topmost, assign_callback with custom callback name
+images.forEach(assign_callback);
+
+// now add hover callback for the topmost layer
+var topmost_layer = images[images.length - 1];
+assign_callback_for_event(topmost_layer, 'mouseover');
