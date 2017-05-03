@@ -25,11 +25,16 @@ $('#layer_1').on("mousedown", function(event) {
 	// If pixel is transparent,
 	// retrieve the element underneath and trigger it's click event
 	if( alpha === 0 ) {
+
 		$(this).hide();
-		$(document.elementFromPoint(event.clientX, event.clientY)).trigger("click");
+		$(document.elementFromPoint(event.clientX, event.clientY)).trigger("mousedown");
 		$(this).show();
 
 	} else {
 		console.log("LOGO clicked!");
 	}
+});
+
+$('#layer_2').on("mousedown", function(event) {
+	console.log("LAYER 2 CLICKED!");
 });
