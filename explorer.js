@@ -25,7 +25,7 @@ function toArray(a) {
 
 // find all layers in our diagram
 var container = document.getElementById("container");
-var images = new Map();
+
 function assign_callback_for_event(element, event_name) {
 
 	// code from http://stackoverflow.com/a/38488246/1586231
@@ -38,7 +38,6 @@ function assign_callback_for_event(element, event_name) {
 				y = event.pageY - this.offsetTop,
 				w = context.canvas.width = this.width,
 				h = context.canvas.height = this.height,
-				rgba,
 				alpha;
 
 			// Draw image to canvas
@@ -53,17 +52,17 @@ function assign_callback_for_event(element, event_name) {
 			// If pixel is transparent,
 			// retrieve the element underneath and trigger it's click event
 			if( alpha === 0 ) {
-
+				var next_layer;
 				// maybe worth attempting in the future: http://stackoverflow.com/a/13426070/1586231
-				var cur_index = images.prototype.keys().indexOf(this.id);
-				console.log("cur_index: ", cur_index);
-				if (cur_index > 0) {
-					cur_index--;
-					var next_layer_id = images.prototype.keys()[cur_index];
-					console.log("next_layer_id: ", next_layer_id);
-					var next_layer = images.get(next_layer_id);
+				for (var i = images.length - 1; i > 0; i--) {
+					if (images[i].id === this.id) {
+						next_layer = images[i-1];
+						break;
+					}
+				}
+				if (next_layer) {
 					var e = new jQuery.Event("mousedown");
-					console.log("triggering: ", event.pageX, event.pageY);
+					console.log("triggering: ", event.pageX, event.pageY, next_layer.id);
 					e.pageX = event.pageX;
 					e.pageY = event.pageY;
 					$(layer_name(next_layer.id)).trigger(e);
@@ -91,13 +90,7 @@ function assign_callback(element, index, array) {
 	}
 }
 
-function image_assign(element, index, array) {
-	console.log(element.id, index);
-	images.set([element.id], element);
-	assign_callback(element, index, array);
-}
+var images = toArray(container.getElementsByClassName("layer"));
+images.forEach(assign_callback);
 
-var images_array = toArray(container.getElementsByClassName("layer"));
-images_array.forEach(image_assign);
-
-assign_callback_for_event(images.get('layer_1'), "mousemove");
+assign_callback_for_event(images[images.length-1], "mousemove");
