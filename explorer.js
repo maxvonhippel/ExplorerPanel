@@ -34,15 +34,16 @@ function assign_callback_for_event(element, event_name) {
 	$(_name).on(event_name, function(event) {
 
 			// Get click coordinates
-			var x = event.pageX - this.offsetLeft,
-				y = event.pageY - this.offsetTop,
-				w = context.canvas.width = this.width,
-				h = context.canvas.height = this.height,
+			var x = event.pageX - element.offsetLeft,
+				y = event.pageY - element.offsetTop,
+				w = context.canvas.width = element.width,
+				h = context.canvas.height = element.height,
 				alpha;
 
 			// Draw image to canvas
 			// and read Alpha channel value
-			context.drawImage(this, 0, 0, w, h);
+			console.log(element.id);
+			context.drawImage(element, 0, 0, w, h);
 			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
 			// If pixel is transparent,
 			// retrieve the element underneath and trigger it's click event
@@ -64,7 +65,7 @@ function assign_callback_for_event(element, event_name) {
 				}
 
 			} else {
-				console.log("CLICKED: " + this.id);
+				console.log("CLICKED: " + element.id);
 			}
 
 		});
@@ -73,14 +74,12 @@ function assign_callback_for_event(element, event_name) {
 
 function assign_callback(element, index, array) {
 
-	if (index != 0) {
-		element.onload = function() {
-			try {
-				// try to assign callback
-				assign_callback_for_event(element, "mousedown");
-			} catch (err) {
-				console.log("error while trying to assign callback: " + err);
-			}
+	element.onload = function() {
+		try {
+			// try to assign callback
+			assign_callback_for_event(element, "mousedown");
+		} catch (err) {
+			console.log("error while trying to assign callback: " + err);
 		}
 	}
 }
