@@ -32,7 +32,7 @@ function assign_callback_for_event(element, event_name) {
 	var _name = layer_name(element.id);
 
 	$(_name).on(event_name, function(event) {
-			console.log("checking: ", this.id);
+
 			// Get click coordinates
 			var x = event.pageX - this.offsetLeft,
 				y = event.pageY - this.offsetTop,
@@ -45,7 +45,7 @@ function assign_callback_for_event(element, event_name) {
 			// and read Alpha channel value
 			context.drawImage(this, 0, 0, w, h);
 			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
-
+			console.log(x, y, w, h, "alpha: " + alpha, this.id);
 			// If pixel is transparent,
 			// retrieve the element underneath and trigger it's click event
 			if( alpha === 0 ) {
@@ -55,10 +55,9 @@ function assign_callback_for_event(element, event_name) {
 				if (cur_index > 0) {
 					cur_index--;
 					var next_layer = images[cur_index];
-					console.log(next_layer.id);
 					var e = new jQuery.Event("mousedown");
-					e.pageX = event.clientX;
-					e.pageY = event.clientY;
+					e.pageX = event.pageX;
+					e.pageY = event.pageY;
 					$(layer_name(next_layer.id)).trigger(e);
 				}
 
