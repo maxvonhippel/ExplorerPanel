@@ -1,6 +1,7 @@
 var canvas = document.createElement("canvas");
 // add the canvas
 var context = canvas.getContext('2d');
+var currently_drawn = 0;
 
 // name with hashtag to find div of a layer
 function layer_name(name) {
@@ -43,7 +44,10 @@ function assign_callback_for_event(element, event_name) {
 
 			// Draw image to canvas
 			// and read Alpha channel value
-			context.drawImage(this, 0, 0, w, h);
+			if (currently_drawn != images.indexOf(this)) {
+				context.drawImage(this, 0, 0, w, h);
+				currently_drawn = images.indexOf(this);
+			}
 			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
 			console.log(x, y, w, h, "alpha: " + alpha, this.id);
 			// If pixel is transparent,
