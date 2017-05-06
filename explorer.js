@@ -42,13 +42,8 @@ function assign_callback_for_event(element, event_name) {
 
 			// Draw image to canvas
 			// and read Alpha channel value
-			if (currently_drawn != this.id) {
-				context.drawImage(this, 0, 0, w, h);
-				currently_drawn = this.id;
-				console.log("drawing new image for layer: ", currently_drawn);
-			}
+			context.drawImage(this, 0, 0, w, h);
 			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
-			console.log(x, y, w, h, "alpha: " + alpha, this.id);
 			// If pixel is transparent,
 			// retrieve the element underneath and trigger it's click event
 			if( alpha === 0 ) {
@@ -62,9 +57,9 @@ function assign_callback_for_event(element, event_name) {
 				}
 				if (next_layer) {
 					var e = new jQuery.Event("mousedown");
-					console.log("triggering: ", event.pageX, event.pageY, next_layer.id);
 					e.pageX = event.pageX;
 					e.pageY = event.pageY;
+					console.log("CHECKING: " + next_layer.id);
 					$(layer_name(next_layer.id)).trigger(e);
 				}
 
@@ -92,5 +87,4 @@ function assign_callback(element, index, array) {
 
 var images = toArray(container.getElementsByClassName("layer"));
 images.forEach(assign_callback);
-
 assign_callback_for_event(images[images.length-1], "mousemove");
