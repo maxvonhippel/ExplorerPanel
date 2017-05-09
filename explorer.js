@@ -1,3 +1,32 @@
+// find the container for the interactive
+var container = document.getElementById("container");
+// set the container style sheet
+container.style.border = '1px solid #000';
+container.style.width = '60%';
+container.style.height = '60vw';
+container.style.display = 'block';
+container.style.margin = 'auto';
+
+// add the images - hardcoded for now, but will be made dynamic later
+// (using some sort of database or internal data file, such as csv or json)
+var layer_names = ["MainCabinet","AF600","Buttons","C2000Relay",
+					"Contractor","MCB","MCCB","MotorStarter",
+					"OverloadRelay","SafetySwitch","SoftStarter"];
+
+for (var i = 0; i < layer_names.length; i++) {
+    var new_layer = document.createElement("img");
+    var new_layer_src = "photos/" + layer_names[i] + ".png";
+    new_layer.setAttribute("src", new_layer_src);
+	new_layer.setAttribute("class", "layer");
+	new_layer.setAttribute("id", layer_names[i]);
+
+	new_layer.style.position = "absolute";
+	new_layer.style.maxHeight = "60%";
+	new_layer.style.maxWidth = "60%";
+
+	container.appendChild(new_layer);
+}
+
 var canvas = document.createElement("canvas");
 // add the canvas
 var context = canvas.getContext('2d');
@@ -23,18 +52,19 @@ function toArray(a) {
 	return result;
 }
 
-// find the container for the interactive
-var container = document.getElementById("container");
-
 // add some text for demo
-var text = document.createTextNode('Mouse over the geometric shapes and this text should update.');
-container.parentNode.insertBefore(text, container);
+var text = document.createTextNode('Mouse over the components and this text should update.');
+container.appendChild(text);
 
 function assign_callback_for_event(element, event_name) {
 
 	// code from http://stackoverflow.com/a/38488246/1586231
 	var _name = layer_name(element.id);
 
+	// apply css to make the image position absolute
+	$(_name).css('position','absolute');
+
+	// apply the pseudo-mouseover event listener, handler
 	$(_name).on(event_name, function(event) {
 
 			// Get click coordinates
@@ -46,7 +76,6 @@ function assign_callback_for_event(element, event_name) {
 
 			// Draw image to canvas
 			// and read Alpha channel value
-			console.log(element.id);
 			context.drawImage(element, 0, 0, w, h);
 			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
 			// If pixel is transparent,
@@ -64,12 +93,11 @@ function assign_callback_for_event(element, event_name) {
 					var e = new jQuery.Event("mousedown");
 					e.pageX = event.pageX;
 					e.pageY = event.pageY;
-					console.log("CHECKING: " + next_layer.id);
 					$(layer_name(next_layer.id)).trigger(e);
 				}
 				else {
 					// background
-					text.nodeValue = "background";
+					text.nodeValue = "Mouse over the components and this text should update.";
 				}
 
 			} else {
@@ -95,3 +123,6 @@ function assign_callback(element, index, array) {
 var images = toArray(container.getElementsByClassName("layer"));
 images.forEach(assign_callback);
 assign_callback_for_event(images[images.length-1], "mousemove");
+
+// fix problem where border of container doesn't completely wrap around inner images
+container.style.clear = 'both';
