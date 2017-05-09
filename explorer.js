@@ -23,8 +23,12 @@ function toArray(a) {
 	return result;
 }
 
-// find all layers in our diagram
+// find the container for the interactive
 var container = document.getElementById("container");
+
+// add some text for demo
+var text = document.createTextNode('Mouse over the geometric shapes and this text should update.');
+container.parentNode.insertBefore(text, container);
 
 function assign_callback_for_event(element, event_name) {
 
@@ -63,9 +67,13 @@ function assign_callback_for_event(element, event_name) {
 					console.log("CHECKING: " + next_layer.id);
 					$(layer_name(next_layer.id)).trigger(e);
 				}
+				else {
+					// background
+					text.nodeValue = "background";
+				}
 
 			} else {
-				console.log("CLICKED: " + element.id);
+				text.nodeValue = element.id;
 			}
 
 		});
