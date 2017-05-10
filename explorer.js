@@ -58,7 +58,6 @@ container.appendChild(text);
 
 function assign_callback_for_event(element, event_name) {
 
-	// code from http://stackoverflow.com/a/38488246/1586231
 	var _name = layer_name(element.id);
 
 	// apply css to make the image position absolute
@@ -82,7 +81,6 @@ function assign_callback_for_event(element, event_name) {
 			// retrieve the element underneath and trigger it's click event
 			if( alpha === 0 ) {
 				var next_layer;
-				// maybe worth attempting in the future: http://stackoverflow.com/a/13426070/1586231
 				for (var i = images.length - 1; i > 0; i--) {
 					if (images[i].id === this.id) {
 						next_layer = images[i-1];
