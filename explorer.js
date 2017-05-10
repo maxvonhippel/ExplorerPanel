@@ -104,7 +104,7 @@ function assign_callback_for_event(element, event_name) {
 				text.nodeValue = element.id;
 			}
 
-		});
+	});
 
 }
 
