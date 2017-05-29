@@ -16,7 +16,7 @@ var further_styles =`
 }
 .remodal {
 	color: #2b2e38;
-	background: rgba(255, 255, 255, 0.7);
+	background: rgba(255, 255, 255, 0.85);
 	max-width: 55%;
 	max-height: 55%;
 }
@@ -98,12 +98,14 @@ var layer_names = ["MainCabinet","AF600","Buttons","C2000Relay",
 
 var descriptions = ["Description of MainCabinet","Description of AF600","Description of Buttons","Description of C2000Relay",
 					"Description of Contractor","Description of MCB","Description of MCCB","Description of MotorStarter",
-					"Description of OverloadRelay","Description of SafetySwitch","Description of SoftStarter"]
+					"Description of OverloadRelay","Description of SafetySwitch","Description of SoftStarter"];
+
+var zoomed_images = [];
 
 for (var i = 0; i < layer_names.length; i++) {
 
     var new_layer = document.createElement("img");
-    var new_layer_src = "photos/" + layer_names[i] + ".png";
+    var new_layer_src = "photos/Full/" + layer_names[i] + ".png";
     new_layer.setAttribute("src", new_layer_src);
 	new_layer.setAttribute("class", "layer");
 	new_layer.setAttribute("id", layer_names[i]);
@@ -115,10 +117,19 @@ for (var i = 0; i < layer_names.length; i++) {
 	container.appendChild(new_layer);
 }
 
+for (var i = 0; i < layer_names.length; i++) {
+
+    var new_layer_src = "photos/Zoomed/" + layer_names[i] + ".png";
+    zoomed_images.push(new_layer_src);
+}
+
 var canvas = document.createElement("canvas");
 // add the canvas
 var context = canvas.getContext('2d');
 var currently_drawn = '';
+
+// for animation
+var currently_animated = null;
 
 // name with hashtag to find div of a layer
 function layer_name(name) {
@@ -140,9 +151,13 @@ function toArray(a) {
 	return result;
 }
 
-// add some text for demo
-var text = document.createTextNode('Mouse over the components and this text should update.');
-container.appendChild(text);
+function moveTo(div, dist) {
+    left = $(layer_name(div.id)).position().left;
+    console.log(left);
+    div.style.left = (left + dist) + 'px';
+    div.style.visibility = 'visible';
+    currently_animated = div;
+}
 
 function assign_callback_for_event(element, event_name) {
 
@@ -156,9 +171,11 @@ function assign_callback_for_event(element, event_name) {
 
 		var cur_image = which_image(element, event);
 		if (cur_image == null) {
-			text.nodeValue = "Mouse over the components and this text should update.";
-		} else {
-			text.nodeValue = cur_image.id;
+			//
+		} else if (currently_animated !== cur_image) {
+			if (currently_animated !== null)
+				moveTo(currently_animated, -5);
+			moveTo(cur_image, 5);
 		}
 
 	});
@@ -217,7 +234,7 @@ function show_modal(name) {
 	modal.appendChild(description);
 	// add an image to the modal
 	var image = document.createElement("img");
-	image.setAttribute("src", images[index].src);
+	image.setAttribute("src", zoomed_images[index]);
 	image.setAttribute("id", "modal_image");
 	modal.appendChild(image);
 	image.style.maxWidth = '45%';
