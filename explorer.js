@@ -13,7 +13,12 @@ var layer_names = ["MainCabinet","AF600","Buttons","C2000Relay",
 					"Contractor","MCB","MCCB","MotorStarter",
 					"OverloadRelay","SafetySwitch","SoftStarter"];
 
+var descriptions = ["Description of MainCabinet","Description of AF600","Description of Buttons","Description of C2000Relay",
+					"Description of Contractor","Description of MCB","Description of MCCB","Description of MotorStarter",
+					"Description of OverloadRelay","Description of SafetySwitch","Description of SoftStarter"]
+
 for (var i = 0; i < layer_names.length; i++) {
+
     var new_layer = document.createElement("img");
     var new_layer_src = "photos/" + layer_names[i] + ".png";
     new_layer.setAttribute("src", new_layer_src);
@@ -124,3 +129,20 @@ assign_callback_for_event(images[images.length-1], "mousemove");
 
 // fix problem where border of container doesn't completely wrap around inner images
 container.style.clear = 'both';
+
+function show_modal(name) {
+	var index = layer_names.indexOf(name);
+	if (index == null)
+		return;
+	var image = images[index];
+	var description = descriptions[index];
+	alert(description);
+}
+
+function which_image(event) {
+
+}
+
+$(layer_name(images[images.length-1].id)).on("mousedown", function(event) {
+	show_modal(this.id);
+});
