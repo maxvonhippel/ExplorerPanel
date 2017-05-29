@@ -75,7 +75,7 @@ function assign_callback_for_event(element, event_name) {
 		if (cur_image == null) {
 			text.nodeValue = "Mouse over the components and this text should update.";
 		} else {
-			text.nodeValue = element.id;
+			text.nodeValue = cur_image.id;
 		}
 
 	});
@@ -121,10 +121,8 @@ function which_image(element, event) {
 	// Draw image to canvas
 	// and read Alpha channel value
 	context.drawImage(element, 0, 0, w, h);
-	alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
-	// If pixel is transparent,
-	// retrieve the element underneath and trigger it's click event
-	if (alpha != 0) {
+	alpha = context.getImageData(x, y, 1, 1).data[3];
+	if (alpha !== 0) {
 		return element;
 	} else {
 		index = layer_names.indexOf(element.id);
@@ -139,5 +137,6 @@ function which_image(element, event) {
 }
 
 $(layer_name(images[images.length-1].id)).on("mousedown", function(event) {
-	show_modal(this.id);
+	cur_image = which_image(images[images.length-1], event);
+	show_modal(cur_image.id);
 });
