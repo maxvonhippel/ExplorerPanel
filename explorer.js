@@ -109,14 +109,24 @@ function show_modal(name) {
 	if (index == null)
 		return;
 	var image = images[index];
-	var description = descriptions[index];
 	// make the modal
-
+	var modal = document.createElement("div");
+	modal.setAttribute("data-remodal-id", "modal");
+	var close_button = document.createElement("button");
+	close_button.setAttribute("data-removal-action", "close");
+	close_button.setAttribute("class", "remodal-close");
+	modal.appendChild(close_button);
+	var title = document.createElement("h1");
+	title.innerHTML = name;
+	modal.appendChild(title);
+	var description = document.createElement("p");
+	description.innerHTML = descriptions[index];
+	modal.appendChild(description);
+	container.appendChild(modal);
 	var inst = $('[data-remodal-id=modal]').remodal();
-
-	/**
-	 * Opens the modal window
-	 */
+	$(document).on('closed', '.remodal', function (e) {
+		inst.destroy();
+	});
 	inst.open();
 
 }
