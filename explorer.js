@@ -113,19 +113,24 @@ var descriptions = ["Description of MainCabinet","Description of AF600","Descrip
 
 var zoomed_images = [];
 
-for (var i = 0; i < layer_names.length; i++) {
+function add_image_to_layers(name, path) {
 
-    var new_layer = document.createElement("img");
-    var new_layer_src = "photos/Full/" + layer_names[i] + ".png";
+	var new_layer = document.createElement("img");
+    var new_layer_src = path + name + ".png";
     new_layer.setAttribute("src", new_layer_src);
 	new_layer.setAttribute("class", "layer");
-	new_layer.setAttribute("id", layer_names[i]);
-
+	new_layer.setAttribute("id", name);
 	new_layer.style.position = "absolute";
 	new_layer.style.maxHeight = "60%";
 	new_layer.style.maxWidth = "60%";
-
 	container.appendChild(new_layer);
+
+}
+
+for (var i = 0; i < layer_names.length; i++) {
+
+    add_image_to_layers(layer_names[i], 'photos/Full/');
+
 }
 
 for (var i = 0; i < layer_names.length; i++) {
@@ -163,10 +168,12 @@ function toArray(a) {
 }
 
 function moveTo(div, dist) {
+
     left = $(layer_name(div.id)).position().left;
     div.style.left = (left + dist) + 'px';
     div.style.visibility = 'visible';
     currently_animated = div;
+
 }
 
 function assign_callback_for_event(element, event_name) {
@@ -180,12 +187,12 @@ function assign_callback_for_event(element, event_name) {
 	$(_name).on(event_name, function(event) {
 
 		var cur_image = which_image(element, event);
-		if (cur_image == null) {
-			//
-		} else if (currently_animated !== cur_image) {
-			if (currently_animated !== null)
-				moveTo(currently_animated, -5);
-			moveTo(cur_image, 5);
+		if (currently_animated !== null && currently_animated !== cur_image) {
+			moveTo(currently_animated, -2);
+			currently_animated = null;
+		}
+		if (currently_animated == null && cur_image !== null) {
+			moveTo(cur_image, 2);
 		}
 
 	});
