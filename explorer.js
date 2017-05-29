@@ -1,15 +1,23 @@
+// get the head
+var head = document.getElementsByTagName('head')[0];
+
 // add the stylesheets
+// basic remodal stylesheet
 var styles = document.createElement('link');
 styles.rel = 'stylesheet';
 styles.type = 'text/css';
 styles.href = 'Remodal/dist/remodal.css';
+// default remodal stylesheet
 var def_styles = document.createElement('link');
 def_styles.rel = 'stylesheet';
 def_styles.type = 'text/css';
 def_styles.href = 'Remodal/dist/remodal-default-theme.css';
+
+// add the remodal script js
 var rem_script = document.createElement('script');
 rem_script.src = "Remodal/dist/remodal.min.js";
-var head = document.getElementsByTagName('head')[0];
+
+// add our custom styles
 var further_styles =`
 .remodal-overlay {
 	opacity: 0;
@@ -76,10 +84,13 @@ var further_styles =`
 `;
 var further_styles_div = document.createElement('style');
 further_styles_div.innerHTML = further_styles;
+
+// append all of the above to the head of the html
 head.appendChild(styles);
 head.appendChild(def_styles);
 head.appendChild(rem_script);
 head.appendChild(further_styles_div);
+
 // find the container for the interactive
 var container = document.getElementById("container");
 
@@ -153,7 +164,6 @@ function toArray(a) {
 
 function moveTo(div, dist) {
     left = $(layer_name(div.id)).position().left;
-    console.log(left);
     div.style.left = (left + dist) + 'px';
     div.style.visibility = 'visible';
     currently_animated = div;
