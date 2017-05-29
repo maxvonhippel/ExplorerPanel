@@ -1,47 +1,13 @@
-// find the explorer div
-var explorer = document.getElementById("explorer");
-// create a container for the graphics components
-var container = document.createElement("div");
-// set the id of the graphics container
-container.setAttribute("id", "container");
-// create a container for the dialog components
-var dialog_container = document.createElement("div");
-// set the id for the dialog container
-dialog_container.setAttribute("id", "dialog_container");
-// set the dialog title
-var dialog_title = document.createElement("p");
-dialog_title.setAttribute("title", "dialog title");
-dialog_title.innerHTML = "Component Explorer";
-// set the dialog description
-var dialog_description = document.createElement("p");
-dialog_description.innerHTML = "Mouse over the components and this text should update.";
-// set the dialog image
-var dialog_image = document.createElement("img");
-dialog_image.setAttribute("src", "//:0");
-dialog_image.style.position = "absolute";
-dialog_image.style.maxHeight = "40%";
-dialog_image.style.maxWidth = "40%";
-// append the description, title, & image to the dialog container
-dialog_container.appendChild(dialog_title);
-dialog_container.appendChild(dialog_description);
-dialog_container.appendChild(dialog_image);
-// append the dialog container and graphics containers to the explorer
-explorer.appendChild(dialog_container);
-explorer.appendChild(container);
+// find the container for the interactive
+var container = document.getElementById("container");
+var dialog_container = document.getElementById("dialog_container");
 
-// set the graphics container style sheet
+// set the container style sheet
 container.style.border = '1px solid #000';
 container.style.width = '60%';
 container.style.height = '60vw';
 container.style.display = 'block';
 container.style.margin = 'auto';
-
-// set the dialog container style sheet
-dialog_container.style.border = '1px solid #000';
-dialog_container.style.width = '60%';
-dialog_container.style.height = '20vw';
-dialog_container.style.display = 'block';
-dialog_container.style.margin = 'auto';
 
 // add the images - hardcoded for now, but will be made dynamic later
 // (using some sort of database or internal data file, such as csv or json)
@@ -93,6 +59,10 @@ function toArray(a) {
 	return result;
 }
 
+// add some text for demo
+var text = document.createTextNode('Mouse over the components and this text should update.');
+container.appendChild(text);
+
 function assign_callback_for_event(element, event_name) {
 
 	var _name = layer_name(element.id);
@@ -105,11 +75,9 @@ function assign_callback_for_event(element, event_name) {
 
 		var cur_image = which_image(element, event);
 		if (cur_image == null) {
-			//text.nodeValue = "Mouse over the components and this text should update.";
-			// TODO: ANIMATE
+			text.nodeValue = "Mouse over the components and this text should update.";
 		} else {
-			//text.nodeValue = cur_image.id;
-			// TODO: DE-ANIMATE
+			text.nodeValue = cur_image.id;
 		}
 
 	});
@@ -144,9 +112,9 @@ function show_modal(name) {
 	var image = images[index];
 	var description = descriptions[index];
 
-	dialog_title.innerHTML = name;
-	dialog_description.innerHTML = description;
-	dialog_image.setAttribute("src", images[index].src);
+	// https://www.w3schools.com/howto/howto_css_cards.asp
+	var description_div = dialog_container.getElementsByTagName("p")[0];
+	description_div.innerHTML = description;
 
 }
 
