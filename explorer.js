@@ -1,3 +1,85 @@
+// add the stylesheets
+var styles = document.createElement('link');
+styles.rel = 'stylesheet';
+styles.type = 'text/css';
+styles.href = 'Remodal/dist/remodal.css';
+var def_styles = document.createElement('link');
+def_styles.rel = 'stylesheet';
+def_styles.type = 'text/css';
+def_styles.href = 'Remodal/dist/remodal-default-theme.css';
+var rem_script = document.createElement('script');
+rem_script.src = "Remodal/dist/remodal.min.js";
+var head = document.getElementsByTagName('head')[0];
+var further_styles =`
+.remodal-overlay {
+	opacity: 0;
+}
+.remodal {
+	color: #2b2e38;
+	background: rgba(255, 255, 255, 0.7);
+	max-width: 55%;
+	max-height: 55%;
+}
+.remodal-bg.remodal-is-opening,
+.remodal-bg.remodal-is-opened {
+	-webkit-filter: blur(5px);
+	filter: blur(5px);
+}
+.remodal-overlay.remodal-is-opening,
+.remodal-overlay.remodal-is-closing {
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+.remodal-overlay.remodal-is-opening {
+	-webkit-animation-name: remodal-overlay-opening-keyframes;
+	animation-name: remodal-overlay-opening-keyframes;
+}
+.remodal-overlay.remodal-is-closing {
+	-webkit-animation-name: remodal-overlay-closing-keyframes;
+	animation-name: remodal-overlay-closing-keyframes;
+}
+@-webkit-keyframes remodal-overlay-opening-keyframes {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes remodal-overlay-opening-keyframes {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@-webkit-keyframes remodal-overlay-closing-keyframes {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes remodal-overlay-closing-keyframes {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0;
+	}
+}
+`;
+var further_styles_div = document.createElement('style');
+further_styles_div.innerHTML = further_styles;
+head.appendChild(styles);
+head.appendChild(def_styles);
+head.appendChild(rem_script);
+head.appendChild(further_styles_div);
 // find the container for the interactive
 var container = document.getElementById("container");
 
@@ -108,25 +190,51 @@ function show_modal(name) {
 	var index = layer_names.indexOf(name);
 	if (index == null)
 		return;
-	var image = images[index];
 	// make the modal
 	var modal = document.createElement("div");
+	// set the data remodal id
 	modal.setAttribute("data-remodal-id", "modal");
+	// create the x close button
 	var close_button = document.createElement("button");
 	close_button.setAttribute("data-removal-action", "close");
 	close_button.setAttribute("class", "remodal-close");
+	close_button.style.color = 'black';
+	// add the x close button to the modal
 	modal.appendChild(close_button);
+	// set the title of the modal
 	var title = document.createElement("h1");
 	title.innerHTML = name;
+	// add the title to the modal
 	modal.appendChild(title);
+	// set the description of the modal
 	var description = document.createElement("p");
 	description.innerHTML = descriptions[index];
+	description.setAttribute("id", "modal_description");
+	$('#modal_description').css({
+		'float': 'right'
+	});
+	// add the description to the modal
 	modal.appendChild(description);
+	// add an image to the modal
+	var image = document.createElement("img");
+	image.setAttribute("src", images[index].src);
+	image.setAttribute("id", "modal_image");
+	modal.appendChild(image);
+	image.style.maxWidth = '45%';
+	image.style.maxHeight = '45%';
+	// clear the modal
+	modal.style.clear = 'both';
+	// add the modal to the container
 	container.appendChild(modal);
+	// instantiate the modal
 	var inst = $('[data-remodal-id=modal]').remodal();
 	$(document).on('closed', '.remodal', function (e) {
+		// when we're done, destroy the modal so it can
+		// be reconfigured next time for whatever the user
+		// clicks on next
 		inst.destroy();
 	});
+	// show the modal!
 	inst.open();
 
 }
