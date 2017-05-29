@@ -1,6 +1,5 @@
 // find the container for the interactive
 var container = document.getElementById("container");
-var dialog_container = document.getElementById("dialog_container");
 
 // set the container style sheet
 container.style.border = '1px solid #000';
@@ -111,10 +110,14 @@ function show_modal(name) {
 		return;
 	var image = images[index];
 	var description = descriptions[index];
+	// make the modal
 
-	// https://www.w3schools.com/howto/howto_css_cards.asp
-	var description_div = dialog_container.getElementsByTagName("p")[0];
-	description_div.innerHTML = description;
+	var inst = $('[data-remodal-id=modal]').remodal();
+
+	/**
+	 * Opens the modal window
+	 */
+	inst.open();
 
 }
 

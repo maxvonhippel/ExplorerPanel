@@ -4,6 +4,10 @@
 	<meta charset="utf-8">
 	<! --- jquery --- >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<! --- remodal --- >
+	<link rel="stylesheet" href="Remodal/dist/remodal.css">
+	<link rel="stylesheet" href="Remodal/dist/remodal-default-theme.css">
+	<script src="Remodal/dist/remodal.min.js"></script>
 	<! --- title --- >
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<title>Component Explorer</title>
@@ -13,10 +17,21 @@
 </head>
 <body>
 
-<div id="dialog_container">
-	<p>some text</p>
-</div>
 <div id="container">
+
+	<div data-remodal-id="modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1>Remodal</h1>
+  <p>
+    Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
+  </p>
+</div>
+<script>
+    //var options = {...};
+
+    //$('[data-remodal-id=modal]').remodal(options);
+</script>
+
 </div>
 
 
