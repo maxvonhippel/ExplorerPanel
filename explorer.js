@@ -1,6 +1,6 @@
 // find the container for the interactive
 var container = document.getElementById("container");
-var body = document.getElementById("body");
+var dialog_container = document.getElementById("dialog_container");
 
 // set the container style sheet
 container.style.border = '1px solid #000';
@@ -113,7 +113,8 @@ function show_modal(name) {
 	var description = descriptions[index];
 
 	// https://www.w3schools.com/howto/howto_css_cards.asp
-	console.log(description);
+	var description_div = dialog_container.getElementsByTagName("p")[0];
+	description_div.innerHTML = description;
 
 }
 
