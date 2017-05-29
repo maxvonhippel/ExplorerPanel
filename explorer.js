@@ -71,41 +71,12 @@ function assign_callback_for_event(element, event_name) {
 	// apply the pseudo-mouseover event listener, handler
 	$(_name).on(event_name, function(event) {
 
-			// Get click coordinates
-			var x = event.pageX - element.offsetLeft,
-				y = event.pageY - element.offsetTop,
-				w = context.canvas.width = element.width,
-				h = context.canvas.height = element.height,
-				alpha;
-
-			// Draw image to canvas
-			// and read Alpha channel value
-			context.drawImage(element, 0, 0, w, h);
-			alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
-			// If pixel is transparent,
-			// retrieve the element underneath and trigger it's click event
-			if( alpha === 0 ) {
-				var next_layer;
-				for (var i = images.length - 1; i > 0; i--) {
-					if (images[i].id === this.id) {
-						next_layer = images[i-1];
-						break;
-					}
-				}
-				if (next_layer) {
-					var e = new jQuery.Event("mousedown");
-					e.pageX = event.pageX;
-					e.pageY = event.pageY;
-					$(layer_name(next_layer.id)).trigger(e);
-				}
-				else {
-					// background
-					text.nodeValue = "Mouse over the components and this text should update.";
-				}
-
-			} else {
-				text.nodeValue = element.id;
-			}
+		var cur_image = which_image(element, event);
+		if (cur_image == null) {
+			text.nodeValue = "Mouse over the components and this text should update.";
+		} else {
+			text.nodeValue = element.id;
+		}
 
 	});
 
@@ -139,7 +110,31 @@ function show_modal(name) {
 	alert(description);
 }
 
-function which_image(event) {
+function which_image(element, event) {
+
+	// Get click coordinates
+	var x = event.pageX - element.offsetLeft,
+		y = event.pageY - element.offsetTop,
+		w = context.canvas.width = element.width,
+		h = context.canvas.height = element.height,
+		alpha;
+	// Draw image to canvas
+	// and read Alpha channel value
+	context.drawImage(element, 0, 0, w, h);
+	alpha = context.getImageData(x, y, 1, 1).data[3]; // [0]R [1]G [2]B [3]A
+	// If pixel is transparent,
+	// retrieve the element underneath and trigger it's click event
+	if (alpha != 0) {
+		return element;
+	} else {
+		index = layer_names.indexOf(element.id);
+		if (index === 0) {
+			return element;
+		} else if (index > 0) {
+			return which_image(images[index - 1], event);
+		}
+	}
+	return null;
 
 }
 
