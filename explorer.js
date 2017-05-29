@@ -1,5 +1,7 @@
 // find the container for the interactive
 var container = document.getElementById("container");
+var body = document.getElementById("body");
+
 // set the container style sheet
 container.style.border = '1px solid #000';
 container.style.width = '60%';
@@ -102,12 +104,75 @@ assign_callback_for_event(images[images.length-1], "mousemove");
 container.style.clear = 'both';
 
 function show_modal(name) {
+
+	// get metadata
 	var index = layer_names.indexOf(name);
 	if (index == null)
 		return;
 	var image = images[index];
 	var description = descriptions[index];
-	alert(description);
+
+	// show the modal
+	var dialog = document.createElement("card");
+	dialog.setAttribute("class", "card");
+	dialog.setAttribute("id", "dialog_card");
+
+	// dialog image
+	var dialog_image = document.createElement("img");
+	dialog_image.setAttribute("src", images[index].src);
+	dialog_image.setAttribute("alt", name);
+	dialog_image.setAttribute("style", "width:100%");
+	var dialog_text_container = document.createElement("container");
+	dialog_text_container.setAttribute("id", "dialog_container");
+	// dialog title
+	var dialog_title = document.createElement("h1");
+	dialog_title.setAttribute("id", "dialog_title");
+	dialog_title.innerHTML = name;
+
+	// dialog description
+	var dialog_description = document.createElement("p");
+	dialog_description.innerHTML = description;
+	// x button
+	var dialog_x_button_p = document.createElement("p");
+	var dialog_x_button = document.createElement("button");
+	dialog_x_button.innerHTML = "X";
+	// ---- append ---- //
+	dialog_x_button_p.appendChild(dialog_x_button);
+	dialog_text_container.appendChild(dialog_x_button_p);
+	dialog_text_container.appendChild(dialog_title);
+	dialog_text_container.appendChild(dialog_description);
+	dialog.appendChild(dialog_text_container);
+	// ---- CSS ---- //
+	// css for card
+	$('#dialog_card').css({
+		"box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+		"max-width": "300px",
+		"margin": "auto",
+		"text-align": "center"
+	});
+	// css for container
+	$('#dialog_container').css({
+		"padding": "0 16px"
+	});
+	// css for title
+	$('#dialog_title').css({
+		"color": "grey",
+		"font-size": "18px"
+	});
+	// css for button
+	$('#dialog_button').css({
+		"border": "none",
+		"outline": "0",
+		"display": "inline-block",
+		"padding": "8px",
+		"color": "white",
+		"background-color": "#000",
+		"text-align": "center",
+		"cursor": "pointer",
+		"width": "100%",
+		"font-size": "18px"
+	});
+	body.appendChild(dialog);
 }
 
 function which_image(element, event) {
