@@ -216,13 +216,18 @@ function assign_callback_for_event(element, event_name) {
 			arrow.style.maxHeight = "60%";
 			arrow.style.maxWidth = "60%";
 			arrow.setAttribute("class", 'annotation');
-			console.log("add it: " + arrow.src);
 			container.appendChild(arrow);
 
 			$(layer_name(arrow.id)).on("mousemove", function(event) {
 				if (cur_image !== which_image(element, event)) {
 					arrow.remove();
 				}
+			});
+
+			$(layer_name(arrow.id)).on("mousedown", function(event) {
+				arrow.remove();
+				cur_image = which_image(images[images.length-1], event);
+				show_modal(cur_image.id);
 			});
 
 		}
@@ -331,8 +336,3 @@ function which_image(element, event) {
 	return null;
 
 }
-
-$(layer_name(images[images.length-1].id)).on("mousedown", function(event) {
-	cur_image = which_image(images[images.length-1], event);
-	show_modal(cur_image.id);
-});
