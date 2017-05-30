@@ -304,9 +304,6 @@ function show_modal(name) {
 	var description = document.createElement("p");
 	description.innerHTML = descriptions[index];
 	description.setAttribute("id", "modal_description");
-	$('#modal_description').css({
-		'float': 'right'
-	});
 	// set an example url for the modal
 	var link = document.createElement("a");
 	link.setAttribute("href", "https://www.ge.com/?search=" + name.replace(' ', '%20'));
@@ -317,13 +314,26 @@ function show_modal(name) {
 	description.appendChild(link);
 	// add the description to the modal
 	modal.appendChild(description);
-	// add an image to the modal
-	var image = document.createElement("img");
-	image.setAttribute("src", zoomed_images[index]);
-	image.setAttribute("id", "modal_image");
-	modal.appendChild(image);
-	image.style.maxWidth = '45%';
-	image.style.maxHeight = '45%';
+	if (isMobile === false) {
+		// add an image to the modal
+		var image = document.createElement("img");
+		image.setAttribute("src", zoomed_images[index]);
+		image.setAttribute("id", "modal_image");
+		modal.appendChild(image);
+		image.style.maxWidth = '45%';
+		image.style.maxHeight = '45%';
+	} else if (isMobile === true) {
+		modal.style.position = 'absolute';
+		modal.style.display = 'block';
+		modal.style.maxHeight = '45%';
+		modal.style.maxWidth = '45%';
+		description.style.display = 'block';
+		description.style.maxHeight = '30%';
+		description.style.maxWidth = '30%';
+		title.style.display = 'block';
+		title.style.maxHeight = '30%';
+		title.style.maxWidth = '30%';
+	}
 	// clear the modal
 	modal.style.clear = 'both';
 	// add the modal to the container
