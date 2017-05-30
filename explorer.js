@@ -258,6 +258,9 @@ container.style.clear = 'both';
 
 function show_modal(name) {
 
+	// find existing modals
+	modals = document.getElementsByClassName("modal");
+
 	// get metadata
 	var index = layer_names.indexOf(name);
 	if (index == null)
@@ -266,9 +269,10 @@ function show_modal(name) {
 	var modal = document.createElement("div");
 	// set the data remodal id
 	modal.setAttribute("data-remodal-id", "modal");
+	modal.setAttribute("class", "modal");
 	// create the x close button
 	var close_button = document.createElement("button");
-	close_button.setAttribute("data-removal-action", "close");
+	close_button.setAttribute("data-remodal-action", "close");
 	close_button.setAttribute("class", "remodal-close");
 	close_button.style.color = 'black';
 	// add the x close button to the modal
@@ -285,6 +289,14 @@ function show_modal(name) {
 	$('#modal_description').css({
 		'float': 'right'
 	});
+	// set an example url for the modal
+	var link = document.createElement("a");
+	link.setAttribute("href", "https://www.ge.com/?search=" + name.replace(' ', '%20'));
+	link.innerHTML = name;
+	// add the link to the modal
+	description.appendChild(document.createElement("br"));
+	description.appendChild(document.createElement("br"));
+	description.appendChild(link);
 	// add the description to the modal
 	modal.appendChild(description);
 	// add an image to the modal
@@ -300,14 +312,20 @@ function show_modal(name) {
 	container.appendChild(modal);
 	// instantiate the modal
 	var inst = $('[data-remodal-id=modal]').remodal();
+	// show the modal!
+	inst.open();
+	// handle close
 	$(document).on('closed', '.remodal', function (e) {
 		// when we're done, destroy the modal so it can
 		// be reconfigured next time for whatever the user
 		// clicks on next
-		inst.destroy();
+		var inst = $('[data-remodal-id=modal]').remodal();
+		try {
+			inst.destroy();
+		} catch (e) {
+			// doesn't matter
+		}
 	});
-	// show the modal!
-	inst.open();
 
 }
 
