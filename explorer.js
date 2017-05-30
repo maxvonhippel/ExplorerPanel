@@ -142,8 +142,6 @@ for (var i = 0; i < layer_names.length; i++) {
 var canvas = document.createElement("canvas");
 // add the canvas
 var context = canvas.getContext('2d');
-var currently_drawn = '';
-
 // for animation
 var currently_animated = null;
 
@@ -172,7 +170,9 @@ function moveTo(div, dist) {
     left = $(layer_name(div.id)).position().left;
     div.style.left = (left + dist) + 'px';
     div.style.visibility = 'visible';
-    currently_animated = div;
+    if (dist > 0)
+    	currently_animated = div;
+    else currently_animated = null;
 
 }
 
@@ -187,14 +187,45 @@ function assign_callback_for_event(element, event_name) {
 	$(_name).on(event_name, function(event) {
 
 		var cur_image = which_image(element, event);
-		if (currently_animated !== null && currently_animated !== cur_image) {
-			moveTo(currently_animated, -2);
-			currently_animated = null;
-		}
-		if (currently_animated == null && cur_image !== null) {
-			moveTo(cur_image, 2);
+
+		// have we moved to a new animation?
+		if (currently_animated !== cur_image) {
+
+			// undo existing animation
+			if (currently_animated !== null) {
+				moveTo(currently_animated, -2);
+			}
+
+			// undo existing arrows
+			arrows = document.getElementsByClassName('annotation');
+			for (var i = 0; i < arrows.length; i++) {
+				arrows[i].remove();
+			}
 		}
 
+		// are we currently animating nothing, but should be?
+		if (currently_animated == null && cur_image !== null) {
+
+			// animate the new thing
+			moveTo(cur_image, 2);
+			// make the new arrow
+			var arrow = document.createElement("img");
+			arrow.setAttribute("src", "photos/Annotations/" + cur_image.id + ".png");
+			arrow.setAttribute("id", "annotation" + cur_image.id);
+			arrow.style.position = "absolute";
+			arrow.style.maxHeight = "60%";
+			arrow.style.maxWidth = "60%";
+			arrow.setAttribute("class", 'annotation');
+			console.log("add it: " + arrow.src);
+			container.appendChild(arrow);
+
+			$(layer_name(arrow.id)).on("mousemove", function(event) {
+				if (cur_image !== which_image(element, event)) {
+					arrow.remove();
+				}
+			});
+
+		}
 	});
 
 }
@@ -213,7 +244,9 @@ function assign_callback(element, index, array) {
 
 var images = toArray(container.getElementsByClassName("layer"));
 images.forEach(assign_callback);
-assign_callback_for_event(images[images.length-1], "mousemove");
+images[images.length-1].onload = function() {
+	assign_callback_for_event(images[images.length-1], "mousemove");
+}
 
 // fix problem where border of container doesn't completely wrap around inner images
 container.style.clear = 'both';
