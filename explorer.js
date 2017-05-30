@@ -323,16 +323,17 @@ function show_modal(name) {
 		image.style.maxWidth = '45%';
 		image.style.maxHeight = '45%';
 	} else if (isMobile === true) {
-		modal.style.position = 'absolute';
 		modal.style.display = 'block';
-		modal.style.maxHeight = '45%';
-		modal.style.maxWidth = '45%';
+		modal.style.marginLeft = 'auto';
+		modal.style.marginRight = 'auto';
 		description.style.display = 'block';
 		description.style.maxHeight = '30%';
 		description.style.maxWidth = '30%';
+		description.style.fontSize = '3vw';
 		title.style.display = 'block';
 		title.style.maxHeight = '30%';
 		title.style.maxWidth = '30%';
+		title.style.fontSize = '4vw';
 	}
 	// clear the modal
 	modal.style.clear = 'both';
