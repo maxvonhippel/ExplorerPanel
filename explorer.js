@@ -17,78 +17,9 @@ def_styles.href = 'cur.css';
 var rem_script = document.createElement('script');
 rem_script.src = "Remodal/dist/remodal.min.js";
 
-// add our custom styles
-var further_styles =`
-.remodal-overlay {
-	opacity: 0;
-}
-.remodal {
-	color: #2b2e38;
-	background: rgba(255, 255, 255, 0.85);
-	max-width: 55%;
-	max-height: 55%;
-}
-.remodal-bg.remodal-is-opening,
-.remodal-bg.remodal-is-opened {
-	-webkit-filter: blur(5px);
-	filter: blur(5px);
-}
-.remodal-overlay.remodal-is-opening,
-.remodal-overlay.remodal-is-closing {
-	-webkit-animation-duration: 0s;
-	animation-duration: 0s;
-	-webkit-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
-}
-.remodal-overlay.remodal-is-opening {
-	-webkit-animation-name: remodal-overlay-opening-keyframes;
-	animation-name: remodal-overlay-opening-keyframes;
-}
-.remodal-overlay.remodal-is-closing {
-	-webkit-animation-name: remodal-overlay-closing-keyframes;
-	animation-name: remodal-overlay-closing-keyframes;
-}
-@-webkit-keyframes remodal-overlay-opening-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-@keyframes remodal-overlay-opening-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-@-webkit-keyframes remodal-overlay-closing-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-
-@keyframes remodal-overlay-closing-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-`;
-var further_styles_div = document.createElement('style');
-further_styles_div.innerHTML = further_styles;
-
 // append all of the above to the head of the html
 head.appendChild(def_styles);
 head.appendChild(rem_script);
-head.appendChild(further_styles_div);
 
 // find the container for the interactive
 var container = document.getElementById("container");
