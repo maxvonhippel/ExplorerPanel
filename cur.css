@@ -1,37 +1,12 @@
-/* ==========================================================================
-   Remodal's necessary styles
-   ========================================================================== */
-
-/* Hide scroll bar */
-
 html.remodal-is-locked {
   overflow: hidden;
 
   touch-action: none;
 }
-
-/* Anti FOUC */
-
 .remodal,
 [data-remodal-id] {
   display: none;
 }
-
-/* Necessary styles of the overlay */
-
-.remodal-overlay {
-  position: fixed;
-  z-index: 9999;
-  top: -5000px;
-  right: -5000px;
-  bottom: -5000px;
-  left: -5000px;
-
-  display: none;
-}
-
-/* Necessary styles of the wrapper */
-
 .remodal-wrapper {
   position: fixed;
   z-index: 10000;
@@ -47,7 +22,6 @@ html.remodal-is-locked {
 
   -webkit-overflow-scrolling: touch;
 }
-
 .remodal-wrapper:after {
   display: inline-block;
 
@@ -56,16 +30,10 @@ html.remodal-is-locked {
 
   content: "";
 }
-
-/* Fix iPad, iPhone glitches */
-
 .remodal-overlay,
 .remodal-wrapper {
   backface-visibility: hidden;
 }
-
-/* Necessary styles of the modal dialog */
-
 .remodal {
   position: relative;
 
@@ -73,51 +41,31 @@ html.remodal-is-locked {
 
   text-size-adjust: 100%;
 }
-
 .remodal-is-initialized {
   /* Disable Anti-FOUC */
   display: inline-block;
 }
-
-/* ==========================================================================
-   Remodal's default mobile first theme
-   ========================================================================== */
-
-/* Default theme styles for the background */
-
 .remodal-bg.remodal-is-opening,
 .remodal-bg.remodal-is-opened {
   filter: blur(3px);
 }
-
-/* Default theme styles of the overlay */
-
 .remodal-overlay {
   background: rgba(43, 46, 56, 0.9);
 }
-
 .remodal-overlay.remodal-is-opening,
 .remodal-overlay.remodal-is-closing {
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
-
 .remodal-overlay.remodal-is-opening {
   animation-name: remodal-overlay-opening-keyframes;
 }
-
 .remodal-overlay.remodal-is-closing {
   animation-name: remodal-overlay-closing-keyframes;
 }
-
-/* Default theme styles of the wrapper */
-
 .remodal-wrapper {
   padding: 10px 10px 0;
 }
-
-/* Default theme styles of the modal dialog */
-
 .remodal {
   box-sizing: border-box;
   width: 100%;
@@ -129,30 +77,21 @@ html.remodal-is-locked {
   color: #2b2e38;
   background: #fff;
 }
-
 .remodal.remodal-is-opening,
 .remodal.remodal-is-closing {
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
-
 .remodal.remodal-is-opening {
   animation-name: remodal-opening-keyframes;
 }
-
 .remodal.remodal-is-closing {
   animation-name: remodal-closing-keyframes;
 }
-
-/* Vertical align of the modal dialog */
-
 .remodal,
 .remodal-wrapper:after {
   vertical-align: middle;
 }
-
-/* Close button */
-
 .remodal-close {
   position: absolute;
   top: 0;
@@ -175,12 +114,10 @@ html.remodal-is-locked {
   outline: 0;
   background: transparent;
 }
-
 .remodal-close:hover,
 .remodal-close:focus {
   color: #2b2e38;
 }
-
 .remodal-close:before {
   font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important;
   font-size: 25px;
@@ -197,9 +134,6 @@ html.remodal-is-locked {
   content: "\00d7";
   text-align: center;
 }
-
-/* Dialog buttons */
-
 .remodal-confirm,
 .remodal-cancel {
   font: inherit;
@@ -220,29 +154,22 @@ html.remodal-is-locked {
   border: 0;
   outline: 0;
 }
-
 .remodal-confirm {
   color: #fff;
   background: #81c784;
 }
-
 .remodal-confirm:hover,
 .remodal-confirm:focus {
   background: #66bb6a;
 }
-
 .remodal-cancel {
   color: #fff;
   background: #e57373;
 }
-
 .remodal-cancel:hover,
 .remodal-cancel:focus {
   background: #ef5350;
 }
-
-/* Remove inner padding and border in Firefox 4+ for the button tag. */
-
 .remodal-confirm::-moz-focus-inner,
 .remodal-cancel::-moz-focus-inner,
 .remodal-close::-moz-focus-inner {
@@ -250,10 +177,6 @@ html.remodal-is-locked {
 
   border: 0;
 }
-
-/* Keyframes
-   ========================================================================== */
-
 @keyframes remodal-opening-keyframes {
   from {
     transform: scale(1.05);
@@ -268,7 +191,6 @@ html.remodal-is-locked {
     filter: blur(0);
   }
 }
-
 @keyframes remodal-closing-keyframes {
   from {
     transform: scale(1);
@@ -283,46 +205,17 @@ html.remodal-is-locked {
     filter: blur(0);
   }
 }
-
-@keyframes remodal-overlay-opening-keyframes {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes remodal-overlay-closing-keyframes {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-/* Media queries
-   ========================================================================== */
-
 @media only screen and (min-width: 641px) {
   .remodal {
     max-width: 700px;
   }
 }
-
-/* IE8
-   ========================================================================== */
-
 .lt-ie9 .remodal-overlay {
   background: #2b2e38;
 }
-
 .lt-ie9 .remodal {
   width: 700px;
 }
-
-
 .remodal-overlay {
 	opacity: 0;
 }
@@ -352,40 +245,6 @@ html.remodal-is-locked {
 	-webkit-animation-name: remodal-overlay-closing-keyframes;
 	animation-name: remodal-overlay-closing-keyframes;
 }
-@-webkit-keyframes remodal-overlay-opening-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-@keyframes remodal-overlay-opening-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-@-webkit-keyframes remodal-overlay-closing-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-
-@keyframes remodal-overlay-closing-keyframes {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 0;
-	}
-}
-
 .remodal-overlay {
   opacity: 0;
 }
@@ -439,7 +298,6 @@ html.remodal-is-locked {
     opacity: 0;
   }
 }
-
 @keyframes remodal-overlay-closing-keyframes {
   from {
     opacity: 0;
