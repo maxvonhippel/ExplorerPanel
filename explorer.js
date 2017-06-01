@@ -8,10 +8,9 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 console.log("mobile? " + isMobile);
 
 // default remodal stylesheet
-var def_styles = document.createElement('link');
-def_styles.rel = 'stylesheet';
+var def_styles = document.createElement('style');
 def_styles.type = 'text/css';
-def_styles.href = 'cur.css';
+def_styles.innerHTML = 'html.remodal-is-locked{overflow:hidden;touch-action:none}.remodal,[data-remodal-id]{display:none}.remodal-wrapper{position:fixed;z-index:10000;top:0;right:0;bottom:0;left:0;display:none;overflow:auto;text-align:center;-webkit-overflow-scrolling:touch;padding:10px 10px 0}.remodal-wrapper:after{display:inline-block;height:100%;margin-left:-.05em;content:""}.remodal-overlay,.remodal-wrapper{backface-visibility:hidden}.remodal{position:relative;outline:0;text-size-adjust:100%;box-sizing:border-box;width:100%;margin-bottom:10px;padding:35px;transform:translate3d(0,0,0)}.remodal-cancel,.remodal-close,.remodal-confirm{overflow:visible;margin:0;cursor:pointer;text-decoration:none;outline:0;border:0}.remodal-is-initialized{display:inline-block}.remodal-close,.remodal-close:before{position:absolute;top:0;left:0;display:block;width:35px}.remodal-overlay{background:rgba(43,46,56,.9)}.remodal.remodal-is-closing,.remodal.remodal-is-opening{animation-duration:.3s;animation-fill-mode:forwards}.remodal.remodal-is-opening{animation-name:remodal-opening-keyframes}.remodal.remodal-is-closing{animation-name:remodal-closing-keyframes}.remodal,.remodal-wrapper:after{vertical-align:middle}.remodal-close{height:35px;padding:0;transition:color .2s;color:#95979c;background:0 0}.remodal-close:focus,.remodal-close:hover{color:#2b2e38}.remodal-close:before{font-family:Arial,"Helvetica CY","Nimbus Sans L",sans-serif!important;font-size:25px;line-height:35px;content:"x";text-align:center}.remodal-cancel,.remodal-confirm{font:inherit;display:inline-block;min-width:110px;padding:12px 0;transition:background .2s;text-align:center;vertical-align:middle}.remodal-confirm{color:#fff;background:#81c784}.remodal-confirm:focus,.remodal-confirm:hover{background:#66bb6a}.remodal-cancel{color:#fff;background:#e57373}.remodal-cancel:focus,.remodal-cancel:hover{background:#ef5350}.remodal-cancel::-moz-focus-inner,.remodal-close::-moz-focus-inner,.remodal-confirm::-moz-focus-inner{padding:0;border:0}@keyframes remodal-opening-keyframes{from{transform:scale(1.05);opacity:0}to{transform:none;opacity:1;filter:blur(0)}}@keyframes remodal-closing-keyframes{from{transform:scale(1);opacity:1}to{transform:scale(.95);opacity:0;filter:blur(0)}}@media only screen and (min-width:641px){.remodal{max-width:700px}}.lt-ie9 .remodal-overlay{background:#2b2e38}.lt-ie9 .remodal{width:700px}.remodal-overlay{opacity:0}.remodal{color:#2b2e38;background:rgba(255,255,255,.85);max-width:55%;max-height:55%}.remodal-bg.remodal-is-opened,.remodal-bg.remodal-is-opening{-webkit-filter:blur(5px);filter:blur(5px)}.remodal-overlay.remodal-is-closing,.remodal-overlay.remodal-is-opening{-webkit-animation-duration:0s;animation-duration:0s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}.remodal-overlay.remodal-is-opening{-webkit-animation-name:remodal-overlay-opening-keyframes;animation-name:remodal-overlay-opening-keyframes}.remodal-overlay.remodal-is-closing{-webkit-animation-name:remodal-overlay-closing-keyframes;animation-name:remodal-overlay-closing-keyframes}@-webkit-keyframes remodal-overlay-opening-keyframes{from,to{opacity:0}}@keyframes remodal-overlay-opening-keyframes{from,to{opacity:0}}@-webkit-keyframes remodal-overlay-closing-keyframes{from,to{opacity:0}}@keyframes remodal-overlay-closing-keyframes{from,to{opacity:0}}';
 
 // add the remodal script js
 var rem_script = document.createElement('script');
@@ -135,7 +134,7 @@ function assign_callback_for_event(element, event_name) {
 		// are we currently animating nothing, but should be?
 		if (currently_animated == null && cur_image !== null) {
 
-			if (isMobile === false) {
+			if (isMobile === false && cur_image.id !== 'MainCabinet') {
 				// animate the new thing
 				moveTo(cur_image, 5);
 				// make the new arrow
