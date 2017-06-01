@@ -128,6 +128,8 @@ if (isMobile === false) {
 	}
 }
 function show_modal(name) {
+	if (name === 'MainCabinet')
+		return;
 	// get metadata
 	var index = layer_names.indexOf(name);
 	if (index == null)
