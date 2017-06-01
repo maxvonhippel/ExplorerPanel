@@ -122,7 +122,7 @@ function assign_callback_for_event(element, event_name) {
 		if (currently_animated !== cur_image && isMobile === false) {
 			// undo existing animation
 			if (currently_animated !== null) {
-				moveTo(currently_animated, -2);
+				moveTo(currently_animated, -5);
 			}
 
 			// undo existing arrows
@@ -137,7 +137,7 @@ function assign_callback_for_event(element, event_name) {
 
 			if (isMobile === false) {
 				// animate the new thing
-				moveTo(cur_image, 2);
+				moveTo(cur_image, 5);
 				// make the new arrow
 				var arrow = document.createElement("img");
 				arrow.setAttribute("src", "photos/Annotations/" + cur_image.id + ".png");
