@@ -16,7 +16,7 @@ container.appendChild(def_styles);
 var title = document.createElement("h1");
 title.style.fontFamily = 'GEInspiraBold';
 title.innerHTML = "Cabinet Components";
-title.style.textIndent = '5%';
+title.style.textIndent = '10%';
 container.appendChild(title);
 // modify the container style sheet
 container.style.width = '100%';
@@ -35,8 +35,8 @@ function add_image_to_layers(name, path) {
 	new_layer.setAttribute("class", "layer");
 	new_layer.setAttribute("id", name);
 	new_layer.style.position = "absolute";
-	new_layer.style.maxHeight = "60%";
-	new_layer.style.maxWidth = "60%";
+	new_layer.style.maxHeight = "100%";
+	new_layer.style.maxWidth = "100%";
 	container.appendChild(new_layer);
 }
 // populate full images array
@@ -93,8 +93,8 @@ function assign_callback_for_event(element, event_name) {
 				arrow.setAttribute("src", "photos/Annotations/" + cur_image.id + ".png");
 				arrow.setAttribute("id", "annotation" + cur_image.id);
 				arrow.style.position = "absolute";
-				arrow.style.maxHeight = "60%";
-				arrow.style.maxWidth = "60%";
+				arrow.style.maxHeight = "100%";
+				arrow.style.maxWidth = "100%";
 				arrow.setAttribute("class", 'annotation');
 				container.appendChild(arrow);
 				$(layer_name(arrow.id)).on("mousemove", function(event) {
