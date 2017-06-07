@@ -12,12 +12,6 @@ def_styles.innerHTML = '@font-face {font-family: GEInspiraBold;src: url(GEInspir
 var container = document.getElementById("container");
 // append all of the above to the container
 container.appendChild(def_styles);
-// add text blurb to top
-var title = document.createElement("h1");
-title.style.fontFamily = 'GEInspiraBold';
-title.innerHTML = "Cabinet Components";
-title.style.textIndent = '10%';
-container.appendChild(title);
 // modify the container style sheet
 container.style.width = '90%';
 container.style.height = '90vw';
