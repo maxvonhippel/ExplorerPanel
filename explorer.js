@@ -184,10 +184,9 @@ function show_modal(name) {
 	modal.appendChild(title);
 	modal.appendChild(description);
 	modal.appendChild(image);
-	// instantiate the modal
-	var inst = $('[data-remodal-id=modal]').remodal();
 	container.appendChild(modal);
 	// show the modal!
+	var inst = $('[data-remodal-id=modal]').remodal();
 	inst.open();
 	// handle close
 	$(document).on('closed', '.remodal', function (e) {
