@@ -19,8 +19,8 @@ title.innerHTML = "Cabinet Components";
 title.style.textIndent = '10%';
 container.appendChild(title);
 // modify the container style sheet
-container.style.width = '100%';
-container.style.height = '100vw';
+container.style.width = '90%';
+container.style.height = '90vw';
 container.style.display = 'block';
 container.style.margin = 'auto';
 // unallowed stuff
