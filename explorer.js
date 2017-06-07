@@ -131,6 +131,49 @@ if (isMobile === false) {
 		assign_callback_for_event(images[images.length-1], "mousedown");
 	}
 }
+
+// make the modal
+var modal = document.createElement("div");
+// set the data remodal id
+modal.setAttribute("data-remodal-id", "modal");
+modal.setAttribute("class", "modal");
+// create the x close button
+var close_button = document.createElement("button");
+close_button.setAttribute("data-remodal-action", "close");
+close_button.setAttribute("class", "remodal-close");
+close_button.style.color = 'black';
+// add the x close button to the modal
+modal.appendChild(close_button);
+// set the title of the modal
+var modal_title = document.createElement("h1");
+// set the description of the modal
+var modal_description = document.createElement("p");
+modal_description.setAttribute("id", "modal_description");
+// set an example url for the modal
+var modal_link = document.createElement("a");
+modal_link.setAttribute("target", "_blank");
+modal_title.style.fontFamily = 'GEInspira';
+modal_description.style.fontFamily = 'GEInspira';
+// add an image to the modal
+var modal_image = document.createElement("img");
+modal_image.setAttribute("id", "modal_image");
+modal_image.style.width = 'auto';
+modal_image.style.margin = 'auto';
+modal_title.style.margin = 'auto';
+modal_description.style.margin = 'auto';
+modal_title.style.fontSize = 'auto';
+modal_description.style.fontSize = 'auto';
+modal_link.style.margin = 'auto';
+modal_link.style.fontsize = 'auto';
+// add the modal to the container
+modal.appendChild(modal_title);
+modal.appendChild(modal_description);
+modal.appendChild(modal_link);
+modal.appendChild(document.createElement("br"));
+modal.appendChild(modal_image);
+container.appendChild(modal);
+var modal_inst = $('[data-remodal-id=modal]').remodal();
+// show modal function
 function show_modal(name) {
 	if (unallowed.has(name))
 		return;
@@ -138,60 +181,14 @@ function show_modal(name) {
 	var index = layer_names.indexOf(name);
 	if (index == null)
 		return;
-	// make the modal
-	var modal = document.createElement("div");
-	// set the data remodal id
-	modal.setAttribute("data-remodal-id", "modal");
-	modal.setAttribute("class", "modal");
-	// create the x close button
-	var close_button = document.createElement("button");
-	close_button.setAttribute("data-remodal-action", "close");
-	close_button.setAttribute("class", "remodal-close");
-	close_button.style.color = 'black';
-	// add the x close button to the modal
-	modal.appendChild(close_button);
-	// set the title of the modal
-	var title = document.createElement("h1");
-	title.innerHTML = name.replace("-"," ");
-	// set the description of the modal
-	var description = document.createElement("p");
-	description.innerHTML = descriptions[index];
-	description.setAttribute("id", "modal_description");
-	// set an example url for the modal
-	var link = document.createElement("a");
-	link.setAttribute("href", "https://www.ge.com/?search=" + name.replace(' ', '%20'));
-	link.setAttribute("target", "_blank");
-	link.innerHTML = name;
-	// add the link to the modal
-	description.appendChild(document.createElement("br"));
-	description.appendChild(document.createElement("br"));
-	description.appendChild(link);
-	title.style.fontFamily = 'GEInspira';
-	description.style.fontFamily = 'GEInspira';
-	// add an image to the modal
-	var image = document.createElement("img");
-	image.setAttribute("src", zoomed_images[index]);
-	image.setAttribute("id", "modal_image");
-	image.style.width = 'auto';
-	image.style.margin = 'auto';
-	title.style.margin = 'auto';
-	description.style.margin = 'auto';
-	title.style.fontSize = 'auto';
-	description.style.fontSize = 'auto';
-	// clear the modal
+	modal_title.innerHTML = name.replace("-"," ");
+	modal_description.innerHTML = descriptions[index];
+	modal_link.setAttribute("href", "https://www.ge.com/?search=" + name.replace('-', '%20'));
+	modal_link.innerHTML = name;
+	modal_image.setAttribute("src", zoomed_images[index]);
 	modal.style.clear = 'both';
-	// add the modal to the container
-	modal.appendChild(title);
-	modal.appendChild(description);
-	modal.appendChild(image);
-	container.appendChild(modal);
-	// show the modal!
-	var inst = $('[data-remodal-id=modal]').remodal();
-	inst.open();
-	// handle close
-	$(document).on('closed', '.remodal', function (e) {
-		try { inst.destroy(); } catch (e) { }
-	});
+	modal_inst = $('[data-remodal-id=modal]').remodal();
+	modal_inst.open();
 }
 function which_image(element, event) {
 	// Get click coordinates
