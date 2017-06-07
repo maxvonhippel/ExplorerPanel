@@ -23,9 +23,11 @@ container.style.width = '100%';
 container.style.height = '100vw';
 container.style.display = 'block';
 container.style.margin = 'auto';
+// unallowed stuff
+var unallowed = new Set(['Cabinet', 'Disconnect-Switches', 'Motor-Starter']);
 // add the images
-var layer_names = ["MainCabinet","AF600","Buttons","OverloadRelay","Contractor","C2000Relay","MCB","MCCB","MotorStarter","SafetySwitch","SoftStarter"];
-var descriptions = ["Description of MainCabinet","Description of AF600","Description of Buttons","Description of C2000Relay","Description of Contractor","Description of MCB","Description of MCCB","Description of MotorStarter","Description of OverloadRelay","Description of SafetySwitch","Description of SoftStarter"];
+var layer_names = ["Cabinet","Pilot-Devices","AF-6000","Disconnect-Switches","Terminal-Blocks","Motor-Starter","Overload-Relay","MCBs","Soft-Starter","Contractors","GuardEon-MCCB","Small-Transformer","PRC-Relay","C2000-Relays"];
+var descriptions = ["Description of Cabinet","Description of Pilot Devices","Description of AF 6000","Description of Disconnect Switches","Description of Terminal Blocks","Description of Motor Starter","Description of Overload Relay","Description of MCBs","Description of Soft Starter","Description of Contractors","Description of GuardEon MCCB","Description of Small Transformer","Description of PRC Relay","Description of C2000 Relays"];
 var zoomed_images = [];
 // populate the layers array & create the graphic
 function add_image_to_layers(name, path) {
@@ -60,6 +62,8 @@ function toArray(a) {
 }
 // function for animating images in component explorer
 function moveTo(div, dist) {
+	if (unallowed.has(div.id))
+		return;
     l = $(layer_name(div.id)).position().left;
 	div.style.left = (l + dist) + 'px';
 	div.style.visibility = 'visible';
@@ -85,7 +89,7 @@ function assign_callback_for_event(element, event_name) {
 		}
 		// are we currently animating nothing, but should be?
 		if (currently_animated == null && cur_image !== null) {
-			if (isMobile === false && cur_image.id !== 'MainCabinet') {
+			if (isMobile === false && !(unallowed.has(cur_image.id))) {
 				// animate the new thing
 				moveTo(cur_image, 5);
 				// make the new arrow
@@ -128,7 +132,7 @@ if (isMobile === false) {
 	}
 }
 function show_modal(name) {
-	if (name === 'MainCabinet')
+	if (unallowed.has(name))
 		return;
 	// get metadata
 	var index = layer_names.indexOf(name);
@@ -148,7 +152,7 @@ function show_modal(name) {
 	modal.appendChild(close_button);
 	// set the title of the modal
 	var title = document.createElement("h1");
-	title.innerHTML = name;
+	title.innerHTML = name.replace("-"," ");
 	// set the description of the modal
 	var description = document.createElement("p");
 	description.innerHTML = descriptions[index];
@@ -175,14 +179,14 @@ function show_modal(name) {
 	title.style.fontSize = 'auto';
 	description.style.fontSize = 'auto';
 	// clear the modal
-	// modal.style.clear = 'both';
+	modal.style.clear = 'both';
 	// add the modal to the container
 	modal.appendChild(title);
 	modal.appendChild(description);
 	modal.appendChild(image);
-	container.appendChild(modal);
 	// instantiate the modal
 	var inst = $('[data-remodal-id=modal]').remodal();
+	container.appendChild(modal);
 	// show the modal!
 	inst.open();
 	// handle close
