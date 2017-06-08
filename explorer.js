@@ -21,7 +21,7 @@ container.style.margin = 'auto';
 var unallowed = new Set(['Cabinet', 'Disconnect-Switches', 'Motor-Starter']);
 // add the images
 var layer_names = ["Cabinet","Pilot-Devices","AF-6000","Disconnect-Switches","Terminal-Blocks","Motor-Starter","Overload-Relay","MCBs","Soft-Starter","Contractors","GuardEon-MCCB","Small-Transformer","PRC-Relay","C2000-Relays"];
-var descriptions = ["Description of Cabinet","Description of Pilot Devices","Description of AF 6000","Description of Disconnect Switches","Description of Terminal Blocks","Description of Motor Starter","Description of Overload Relay","Description of MCBs","Description of Soft Starter","Description of Contractors","<b>Smart. Reliable. Secure.</b><br>GuardEon is a low-voltage molded case circuit breaker platform designed by users for global industry applications and built for the age of the industrial internet.<br><ul><li>Excellent uptime with onboard diagnostics and predictive maintenance capabilities</li><li>ArcWatch enabled to provide arc flash protection and selective coordination</li><li>Save up to 30% on labor costs with the PremEon-G Trip Unit</li><li>Rotating faceplates enable label readability in both vertical and horizontal orientations</li></ul>","Description of Small Transformer","Description of PRC Relay","Description of C2000 Relays"];
+var descriptions = ["Description of Cabinet","Description of Pilot Devices","Description of AF 6000","Description of Disconnect Switches","Description of Terminal Blocks","Description of Motor Starter","Description of Overload Relay","Description of MCBs","Description of Soft Starter","Description of Contractors","<b>Smart. Reliable. Secure.</b><br>GuardEon is a low-voltage molded case circuit breaker platform designed by users for global industry applications and built for the age of the industrial internet.<br><ul><li>Excellent uptime with onboard diagnostics and predictive maintenance capabilities</li><li>ArcWatch enabled to provide arc flash protection and selective coordination</li><li>Save up to 30% on labor costs with the PremEon-G Trip Unit</li><li>Rotating faceplates enable label readability in both vertical and horizontal orientations</li></ul><br><a href=\"http://www.geindustrial.com/products/circuit-breakers/guardeon\">Learn More</a>&emsp;&emsp;<a href=\"http://www.geindustrial.com/products/circuit-breakers/molded-case-circuit-breakers\">Related Products</a>","Description of Small Transformer","Description of PRC Relay","Description of C2000 Relays"];
 var zoomed_images = [];
 // populate the layers array & create the graphic
 function add_image_to_layers(name, path) {
@@ -144,9 +144,6 @@ var modal_title = document.createElement("h1");
 var modal_description = document.createElement("p");
 modal_description.setAttribute("id", "modal_description");
 modal_description.style.textAlign = 'left';
-// set an example url for the modal
-var modal_link = document.createElement("a");
-modal_link.setAttribute("target", "_blank");
 modal_title.style.fontFamily = 'GEInspira';
 modal_description.style.fontFamily = 'GEInspira';
 // add an image to the modal
@@ -158,12 +155,9 @@ modal_title.style.margin = 'auto';
 modal_description.style.margin = 'auto';
 modal_title.style.fontSize = 'auto';
 modal_description.style.fontSize = 'auto';
-modal_link.style.margin = 'auto';
-modal_link.style.fontsize = 'auto';
 // add the modal to the container
 modal.appendChild(modal_title);
 modal.appendChild(modal_description);
-modal.appendChild(modal_link);
 modal.appendChild(document.createElement("br"));
 modal.appendChild(modal_image);
 container.appendChild(modal);
@@ -178,8 +172,6 @@ function show_modal(name) {
 		return;
 	modal_title.innerHTML = name.replace("-"," ");
 	modal_description.innerHTML = descriptions[index];
-	modal_link.setAttribute("href", "https://www.ge.com/?search=" + name.replace('-', '%20'));
-	modal_link.innerHTML = name;
 	modal_image.setAttribute("src", zoomed_images[index]);
 	modal.style.clear = 'both';
 	modal_inst = $('[data-remodal-id=modal]').remodal();
