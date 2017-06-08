@@ -8,7 +8,8 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 var def_styles = document.createElement('style');
 def_styles.type = 'text/css';
 def_styles.innerHTML =
-`@font-face {font-family: GEInspiraBold;src: url(GEInspira/GE%20Inspira%20Bold.ttf);}
+`
+@font-face {font-family: GEInspiraBold;src: url(GEInspira/GE%20Inspira%20Bold.ttf);}
 @font-face {font-family:GEInspira;src: url(GEInspira/GE%20Inspira.ttf);}
 html.remodal-is-locked{overflow:hidden;touch-action:none}
 .remodal,[data-remodal-id]{display:none}
@@ -34,14 +35,13 @@ html.remodal-is-locked{overflow:hidden;touch-action:none}
 .remodal-cancel{color:#fff;background:#e57373}
 .remodal-cancel:focus,.remodal-cancel:hover{background:#ef5350}
 .remodal-cancel::-moz-focus-inner,.remodal-close::-moz-focus-inner,.remodal-confirm::-moz-focus-inner{padding:0;border:0}
-@keyframes remodal-opening-keyframes{from{transform:opacity:0}to{transform:opacity:1;filter:blur(0)}}
-@keyframes remodal-closing-keyframes{from{transform:opacity:1}to{transform:opacity:0;filter:blur(0)}}
+@keyframes remodal-opening-keyframes{from{transform:opacity:0}to{transform:opacity:1}}
+@keyframes remodal-closing-keyframes{from{transform:opacity:1}to{transform:opacity:0}}
 @media only screen and (min-width:60%){.remodal{max-width:85%;}}
 .lt-ie9 .remodal-overlay{background:#2b2e38}
 .lt-ie9 .remodal{width:auto}
 .remodal{color:#2b2e38;background:rgba(255,255,255,.85);max-width:85%;max-height:85%}
 .remodal-bg.remodal-is-opened,.remodal-bg.remodal-is-opening{-webkit-filter:blur(5px);filter:blur(5px)}
-.remodal-overlay.remodal-is-closing,.remodal-overlay.remodal-is-opening{-webkit-animation-duration:0s;animation-duration:0s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards}
 .remodal-overlay.remodal-is-opening{-webkit-animation-name:remodal-overlay-opening-keyframes;animation-name:remodal-overlay-opening-keyframes}
 .remodal-overlay.remodal-is-closing{-webkit-animation-name:remodal-overlay-closing-keyframes;animation-name:remodal-overlay-closing-keyframes}
 @-webkit-keyframes remodal-overlay-opening-keyframes{from,to{opacity:0}}
@@ -191,6 +191,7 @@ modal_description.style.fontFamily = 'GEInspira';
 var modal_image = document.createElement("img");
 modal_image.setAttribute("id", "modal_image");
 modal_image.style.width = 'auto';
+modal_image.style.maxWidth = '20%';
 modal_image.style.margin = 'auto';
 modal_title.style.margin = 'auto';
 modal_description.style.margin = 'auto';
